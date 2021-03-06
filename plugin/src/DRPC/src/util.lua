@@ -9,11 +9,7 @@ local success, place = pcall(function()
 end);
 
 -- If offline, above fetch will have failed, remedy that by just getting the game.
-if not success then
-	place = game
-end;
-
-util.place = place;
+util.place = success and place or game;
 
 function util.getPlaceName()
 	return util.place.Name;
@@ -35,11 +31,8 @@ function util.hasChanges()
 			lastEdit = tick();
 		end;
 		
-		if tick() - lastEdit > 180 then
-			changes = false;
-		else
-			changes = true;
-		end;
+		changes = tick() - lastEdit > 180:
+
 	end;
 	
 	return changes;
